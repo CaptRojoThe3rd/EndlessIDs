@@ -5,10 +5,15 @@
 EndlessIDs is the unofficial successor of NotEnoughIDs, with more focus on compatibility, stability, and reaching
 new limits.
 
+## Fork Info
+
+This is the Extended Height Limit fork. This fork adds support for my ChunkAPI fork that
+extends the build limit to 512.
+
 ## REQUIRED MODS
 - [FalsePatternLib](https://github.com/FalsePattern/FalsePatternLib)
 - [UniMixins](https://github.com/LegacyModdingMC/UniMixins)
-- [ChunkAPI](https://github.com/FalsePattern/ChunkAPI)
+- [ChunkAPI (Extended Height Limit Fork)](https://github.com/CaptRojoThe3rd/ChunkAPI)
 
 ## NotEnoughIDs world compatibility
 EndlessIDs can open and upgrade worlds created with NotEnoughIDs without any problems (both the original and the Unofficial version).
