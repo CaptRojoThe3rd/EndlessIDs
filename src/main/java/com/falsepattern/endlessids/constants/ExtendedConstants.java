@@ -77,4 +77,8 @@ public class ExtendedConstants {
     public static final int entityIDCount = 1 << bitsPerEntity;
     public static final int entityIDMask = entityIDCount - 1;
     public static final int maxEntityID = entityIDMask;
+
+    //ExtendedHeightLimit
+    public static final int chunkHeight = 512;
+    public static final int subchunkCount = 32;
 }

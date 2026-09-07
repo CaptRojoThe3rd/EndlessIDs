@@ -61,13 +61,14 @@ repositories {
     exclusive(mavenpattern(), "com.falsepattern")
     exclusive(ivy("mavenpattern_mirror", "https://mvn.falsepattern.com/releases/mirror/", "[orgPath]/[artifact]-[revision].[ext]"), "mirror", "mirror.micdoodle")
     exclusive(ivy("github", "https://github.com/", "[orgPath]/releases/download/[revision]/[artifact]-[revision].[ext]"), "CannibalVox.DimDoors")
+    exclusive(ivy("github", "https://github.com/", "[orgPath]/releases/download/[revision]/[artifact]-mc1.7.10-[revision].[ext]"), "CaptRojoThe3rd.ChunkAPI")
 }
 
 dependencies {
     // region Our deps
     implementationSplit("com.falsepattern:falsepatternlib-mc1.7.10:1.12.2")
     compileOnly("it.unimi.dsi:fastutil:8.5.18")
-    implementationSplit("com.falsepattern:chunkapi-mc1.7.10:0.8.3")
+    implementation(deobf("CaptRojoThe3rd.ChunkAPI:chunkapi:0.8.4-EHL"))
     // endregion
 
     // region maintained mods

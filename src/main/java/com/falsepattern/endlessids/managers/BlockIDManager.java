@@ -25,6 +25,7 @@ package com.falsepattern.endlessids.managers;
 import com.falsepattern.chunk.api.ArrayUtil;
 import com.falsepattern.chunk.api.DataManager;
 import com.falsepattern.endlessids.Tags;
+import com.falsepattern.endlessids.constants.ExtendedConstants;
 import com.falsepattern.endlessids.mixin.helpers.SubChunkBlockHook;
 import lombok.val;
 import lombok.var;
@@ -59,7 +60,7 @@ public class BlockIDManager implements DataManager.PacketDataManager, DataManage
 
     @Override
     public int maxPacketSize() {
-        return 3 * 16 * 16 * 16 * 16 + 4;
+        return 3 * 16 * 16 * 16 * ExtendedConstants.subchunkCount + 4;
     }
 
     @Override
@@ -68,7 +69,7 @@ public class BlockIDManager implements DataManager.PacketDataManager, DataManage
         int storageFlags = 0;
         val start = data.position() + 4;
         data.position(start);
-        for (int i = 0; i < 16; i++) {
+        for (int i = 0; i < ExtendedConstants.subchunkCount; i++) {
             if ((subChunkMask & (1 << i)) == 0 || subChunkList[i] == null) {
                 continue;
             }
@@ -103,7 +104,7 @@ public class BlockIDManager implements DataManager.PacketDataManager, DataManage
     public void readFromBuffer(Chunk chunk, int subChunkMask, boolean forceUpdate, ByteBuffer buffer) {
         val subChunkList = chunk.getBlockStorageArray();
         val storageFlags = buffer.getInt();
-        for (int i = 0; i < 16; i++) {
+        for (int i = 0; i < ExtendedConstants.subchunkCount; i++) {
             if ((subChunkMask & (1 << i)) == 0 || subChunkList[i] == null) {
                 continue;
             }
