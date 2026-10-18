@@ -60,14 +60,14 @@ public class BlockIDManager implements DataManager.PacketDataManager, DataManage
 
     @Override
     public int maxPacketSize() {
-        return 3 * 16 * 16 * 16 * ExtendedConstants.subchunkCount + 4;
+        return 3 * 16 * 16 * 16 * ExtendedConstants.subchunkCount + 8;
     }
 
     @Override
     public void writeToBuffer(Chunk chunk, int subChunkMask, boolean forceUpdate, ByteBuffer data) {
         val subChunkList = chunk.getBlockStorageArray();
-        int storageFlags = 0;
-        val start = data.position() + 4;
+        long storageFlags = 0;
+        val start = data.position() + 8;
         data.position(start);
         for (int i = 0; i < ExtendedConstants.subchunkCount; i++) {
             if ((subChunkMask & (1 << i)) == 0 || subChunkList[i] == null) {
@@ -75,7 +75,7 @@ public class BlockIDManager implements DataManager.PacketDataManager, DataManage
             }
             val subChunk = (SubChunkBlockHook) subChunkList[i];
 
-            storageFlags |= subChunk.eid$getBlockMask() << (i * 2);
+            storageFlags |= (long) subChunk.eid$getBlockMask() << (i * 2);
 
             val b1 = subChunk.eid$getB1();
             data.put(b1);
@@ -97,19 +97,19 @@ public class BlockIDManager implements DataManager.PacketDataManager, DataManage
                 data.put(b3);
             }
         }
-        data.putInt(start - 4, storageFlags);
+        data.putLong(start - 8, storageFlags);
     }
 
     @Override
     public void readFromBuffer(Chunk chunk, int subChunkMask, boolean forceUpdate, ByteBuffer buffer) {
         val subChunkList = chunk.getBlockStorageArray();
-        val storageFlags = buffer.getInt();
+        long storageFlags = buffer.getLong();
         for (int i = 0; i < ExtendedConstants.subchunkCount; i++) {
             if ((subChunkMask & (1 << i)) == 0 || subChunkList[i] == null) {
                 continue;
             }
             val subChunk = (SubChunkBlockHook) subChunkList[i];
-            val storageFlag = (storageFlags >>> (i * 2)) & 3;
+            int storageFlag = (int) ((storageFlags >>> (i * 2)) & 3L);
             val b1 = subChunk.eid$getB1();
             buffer.get(b1);
             if (storageFlag == 0b00) {

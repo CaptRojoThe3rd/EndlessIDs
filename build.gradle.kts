@@ -1,5 +1,6 @@
 plugins {
     id("com.falsepattern.fpgradle-mc") version "4.1.0"
+    id("eclipse")
 }
 
 group = "com.falsepattern"
